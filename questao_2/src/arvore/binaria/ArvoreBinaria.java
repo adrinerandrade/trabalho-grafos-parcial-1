@@ -5,11 +5,18 @@ public class ArvoreBinaria<T> {
 	private NoArvoreBinaria<T> raiz;
 
 	public ArvoreBinaria() {
-		raiz = null;
+	}
+
+	public ArvoreBinaria(NoArvoreBinaria<T> raiz) {
+		this.raiz = raiz;
 	}
 
 	public void setRaiz(NoArvoreBinaria<T> raiz) {
 		this.raiz = raiz;
+	}
+
+	public NoArvoreBinaria<T> getRaiz() {
+		return raiz;
 	}
 
 	public boolean estavaVazia() {
@@ -29,17 +36,7 @@ public class ArvoreBinaria<T> {
 
 	@Override
 	public String toString() {
-		return arvorePre(raiz);
-	}
-
-	public String arvorePre(NoArvoreBinaria<T> no) {
-		if (no == null) {
-			return "<>";
-		} else {
-			String strLocal = "<" + no.getInfo() + this.arvorePre(no.getEsquerda()) + this.arvorePre(no.getDireita())
-					+ ">";
-			return strLocal;
-		}
+		return raiz == null ? "<>" : raiz.toString();
 	}
 
 }

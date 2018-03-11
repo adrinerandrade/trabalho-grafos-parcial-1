@@ -1,21 +1,19 @@
 package arvore.binaria;
 
-import java.util.Comparator;
-
 public class NoArvoreBinaria<T> implements  Comparable<NoArvoreBinaria<T>>{
 
 	private T info;
-	private long frequencia;
+	private int peso;
 	private NoArvoreBinaria<T> direita;
 	private NoArvoreBinaria<T> esquerda;
 
-	public NoArvoreBinaria(long frequencia) {
-		this.frequencia = frequencia;
+	public NoArvoreBinaria(int peso) {
+		this.peso = peso;
 	}
 	
-	public NoArvoreBinaria(T info, long frequencia) {
+	public NoArvoreBinaria(T info, int peso) {
 		this.info = info;
-		this.frequencia = frequencia;
+		this.peso = peso;
 	}
 
 	public NoArvoreBinaria(T info, NoArvoreBinaria<T> esq, NoArvoreBinaria<T> dir) {
@@ -28,8 +26,8 @@ public class NoArvoreBinaria<T> implements  Comparable<NoArvoreBinaria<T>>{
 		return info;
 	}
 	
-	public long getFrequencia() {
-		return frequencia;
+	public int getPeso() {
+		return peso;
 	}
 
 	public void setDireita(NoArvoreBinaria<T> direita) {
@@ -48,46 +46,26 @@ public class NoArvoreBinaria<T> implements  Comparable<NoArvoreBinaria<T>>{
 		return this.direita;
 	}
 	
+	@Override
 	public String toString() {
-		return "info: " + info + " - frequencia: " + frequencia;
+		return arvorePre(this);
 	}
-
-	@Override
-	public int compareTo(NoArvoreBinaria<T> arg0) {
-		if(getFrequencia() > arg0.getFrequencia()) {
-			return 1;
-		} else if (getFrequencia() < arg0.getFrequencia()) {
-			return -1;
+	
+	public String arvorePre(NoArvoreBinaria<T> no) {
+		if (no == null) {
+			return "<>";
+		} else {
+			T info = no.getInfo();
+			Object valor_no = info == null ? "" : info;
+			return String.format("<%s%s%s>", valor_no, this.arvorePre(no.getEsquerda()),
+					this.arvorePre(no.getDireita()));
 		}
-		return 0;
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (frequencia ^ (frequencia >>> 32));
-		result = prime * result + ((info == null) ? 0 : info.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		NoArvoreBinaria other = (NoArvoreBinaria) obj;
-		if (frequencia != other.frequencia)
-			return false;
-		if (info == null) {
-			if (other.info != null)
-				return false;
-		} else if (!info.equals(other.info))
-			return false;
-		return true;
+	public int compareTo(NoArvoreBinaria<T> o2) {
+		int diff  = this.peso - o2.peso;
+		return diff == 0 ? -1 : diff;
 	}
 	
 	
