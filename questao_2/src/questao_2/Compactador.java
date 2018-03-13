@@ -15,14 +15,15 @@ public class Compactador {
 
 	private String value;
 	private ArvoreBinaria<Character> arvore = new ArvoreBinaria<>();
+	private byte[] compactados;
 
 	public Compactador(String value) {
 		this.value = value;
 	}
 
-	public byte[] compactar() {
+	public void compactar() {
 		if (value == null || value == "") {
-			return new byte[0];
+			compactados = new byte[0];
 		}
 		Map<Character, Integer> frequencia = criarFrequencia(value);
 
@@ -36,7 +37,6 @@ public class Compactador {
 		for (int i = 0; i < value.length(); ++i) {
 			sb.append(obterBinario(value.charAt(i)));
 		}
-		System.out.println(sb.toString());
 		
 		List<String> bytesBinarios = new ArrayList<>();
 		byte bitsFaltando = inserirBytesBinarios(sb.toString(), bytesBinarios);
@@ -47,7 +47,7 @@ public class Compactador {
 			bytes[i] = (byte) Integer.parseInt(bytesBinarios.get(i - 1), 2);
 		}
 		
-		return bytes;
+		compactados = bytes;
 	}
 
 	private Map<Character, Integer> criarFrequencia(String value) {
@@ -128,7 +128,9 @@ public class Compactador {
 	public ArvoreBinaria<Character> getArvore() {
 		return arvore;
 	}
-	
-	
+
+	public byte[] getCompactados() {
+		return compactados;
+	}
 
 }
