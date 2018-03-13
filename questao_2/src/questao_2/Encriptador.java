@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import arvore.binaria.ArvoreBinaria;
 import arvore.binaria.NoArvoreBinaria;
@@ -37,14 +36,15 @@ public class Encriptador {
 		for (int i = 0; i < value.length(); ++i) {
 			sb.append(obterBinario(value.charAt(i)));
 		}
-
+		System.out.println(sb.toString());
+		
 		List<String> bytesBinarios = new ArrayList<>();
 		byte bitsFaltando = inserirBytesBinarios(sb.toString(), bytesBinarios);
 		
 		byte[] bytes = new byte[(int) bytesBinarios.size() + 1];
 		bytes[0] = bitsFaltando;
-		for (int i = 1; i < bytesBinarios.size(); i ++) {
-			bytes[1] = (byte) Integer.parseInt(bytesBinarios.get(i), 2);
+		for (int i = 1; i < bytes.length; i++) {
+			bytes[i] = (byte) Integer.parseInt(bytesBinarios.get(i - 1), 2);
 		}
 		
 		return bytes;
