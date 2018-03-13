@@ -21,22 +21,23 @@ public class teste {
 			String stringByte = String.format("%8s", Integer.toBinaryString(compactados[i] & 0xFF)).replace(' ', '0');
 			sb.append(stringByte);
 		}
-		System.out.println(sb.toString());
+		String descompactada = sb.toString().substring(0, sb.length() - compactados[0]);
+		System.out.println(descompactada);
 		
-		for (int i = 1; i < compactados.length; ++i) {
-			String stringByte = Integer.toBinaryString(compactados[i] & 0xFF);
-			stringByte.chars()
-				.forEach(ch -> {
-					if(ch == '0' && !no.getRaiz().ehFolha()) { // esquerda não folha
-						no = new ArvoreBinaria<Character>(no.getRaiz().getEsquerda());
-					} else if(ch == '1' && !no.getRaiz().ehFolha()) { //direita não folha
-						no = new ArvoreBinaria<Character>(no.getRaiz().getDireita());
-					} else {
-						valorDescriptografado.append(no.getRaiz().getInfo());
-						no = new ArvoreBinaria<Character>(raiz);
-					}
-				});
-		}
+//		for (int i = 1; i < compactados.length; ++i) {
+//			String stringByte = Integer.toBinaryString(compactados[i] & 0xFF);
+//			stringByte.chars()
+//				.forEach(ch -> {
+//					if(ch == '0' && !no.getRaiz().ehFolha()) { // esquerda não folha
+//						no = new ArvoreBinaria<Character>(no.getRaiz().getEsquerda());
+//					} else if(ch == '1' && !no.getRaiz().ehFolha()) { //direita não folha
+//						no = new ArvoreBinaria<Character>(no.getRaiz().getDireita());
+//					} else {
+//						valorDescriptografado.append(no.getRaiz().getInfo());
+//						no = new ArvoreBinaria<Character>(raiz);
+//					}
+//				});
+//		}
 		
 		System.out.println(valorDescriptografado);
 		
