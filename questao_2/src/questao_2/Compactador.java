@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 import arvore.binaria.ArvoreBinaria;
 import arvore.binaria.NoArvoreBinaria;
 
-public class Encriptador {
+public class Compactador {
 
 	private String value;
 	private ArvoreBinaria<Character> arvore = new ArvoreBinaria<>();
 
-	public Encriptador(String value) {
+	public Compactador(String value) {
 		this.value = value;
 	}
 
