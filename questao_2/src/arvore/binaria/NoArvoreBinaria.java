@@ -68,6 +68,8 @@ public class NoArvoreBinaria<T> implements  Comparable<NoArvoreBinaria<T>>{
 		return diff == 0 ? -1 : diff;
 	}
 	
+	public boolean eFolha() {
+		return this.direita == null && this.esquerda == null;
+	}
 	
-
 }

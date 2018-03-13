@@ -43,8 +43,8 @@ public class Encriptador {
 		
 		byte[] bytes = new byte[(int) bytesBinarios.size() + 1];
 		bytes[0] = bitsFaltando;
-		for (int i = 0; i < bytesBinarios.size(); i ++) {
-			bytes[i + 1] = (byte) Integer.parseInt(bytesBinarios.get(i), 2);
+		for (int i = 1; i < bytesBinarios.size(); i ++) {
+			bytes[1] = (byte) Integer.parseInt(bytesBinarios.get(i), 2);
 		}
 		
 		return bytes;
@@ -124,5 +124,11 @@ public class Encriptador {
 		}
 		return 0;
 	}
+
+	public ArvoreBinaria<Character> getArvore() {
+		return arvore;
+	}
+	
+	
 
 }
