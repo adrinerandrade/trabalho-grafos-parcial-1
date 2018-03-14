@@ -24,7 +24,12 @@ public class Compactador {
 	public void compactar() {
 		if (value == null || value == "") {
 			compactados = new byte[0];
+		} else {
+			realizarCompactacao();
 		}
+	}
+
+	private void realizarCompactacao() {
 		Map<Character, Integer> frequencia = criarFrequencia(value);
 
 		TreeSet<NoArvoreBinaria<Character>> nos = frequencia.entrySet().stream()
@@ -37,16 +42,16 @@ public class Compactador {
 		for (int i = 0; i < value.length(); ++i) {
 			sb.append(obterBinario(value.charAt(i)));
 		}
-		
+
 		List<String> bytesBinarios = new ArrayList<>();
 		byte bitsFaltando = inserirBytesBinarios(sb.toString(), bytesBinarios);
-		
+
 		byte[] bytes = new byte[(int) bytesBinarios.size() + 1];
 		bytes[0] = bitsFaltando;
 		for (int i = 1; i < bytes.length; i++) {
 			bytes[i] = (byte) Integer.parseInt(bytesBinarios.get(i - 1), 2);
 		}
-		
+
 		compactados = bytes;
 	}
 

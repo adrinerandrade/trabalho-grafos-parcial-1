@@ -15,6 +15,9 @@ public class Descompactador {
 	}
 
 	public String descompactar() {
+		if (compactados.length < 1) {
+			return "";
+		}
 		StringBuilder sb = new StringBuilder();
 		for (int i = 1; i < compactados.length; ++i) {
 			String stringByte = String.format("%8s", Integer.toBinaryString(compactados[i] & 0xFF)).replace(' ', '0');
