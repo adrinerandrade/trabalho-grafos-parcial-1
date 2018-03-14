@@ -1,6 +1,8 @@
 package arvore.binaria;
 
-public class NoArvoreBinaria<T> implements  Comparable<NoArvoreBinaria<T>>{
+import java.io.Serializable;
+
+public class NoArvoreBinaria<T> implements  Comparable<NoArvoreBinaria<T>>, Serializable{
 
 	private T info;
 	private int peso;

@@ -1,6 +1,8 @@
 package arvore.binaria;
 
-public class ArvoreBinaria<T> {
+import java.io.Serializable;
+
+public class ArvoreBinaria<T> implements Serializable{
 
 	private NoArvoreBinaria<T> raiz;
 
