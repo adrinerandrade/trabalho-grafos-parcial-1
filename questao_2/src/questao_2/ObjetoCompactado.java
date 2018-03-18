@@ -6,8 +6,11 @@ import arvore.binaria.ArvoreBinaria;
 
 public class ObjetoCompactado implements Serializable{
 	private byte[] compactado;
-	private String arvore;
-	public ObjetoCompactado(byte[] compactado, String arvore) {
+	private ArvoreBinaria<Character> arvore;
+	
+	
+	
+	public ObjetoCompactado(byte[] compactado, ArvoreBinaria<Character> arvore) {
 		super();
 		this.compactado = compactado;
 		this.arvore = arvore;
@@ -18,12 +21,13 @@ public class ObjetoCompactado implements Serializable{
 	public void setCompactado(byte[] compactado) {
 		this.compactado = compactado;
 	}
-	public String getArvore() {
+	public ArvoreBinaria<Character> getArvore() {
 		return arvore;
 	}
-	public void setArvore(String arvore) {
+	public void setArvore(ArvoreBinaria<Character> arvore) {
 		this.arvore = arvore;
 	}
+	
 	
 	
 	
