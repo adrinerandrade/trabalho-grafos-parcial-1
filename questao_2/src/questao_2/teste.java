@@ -10,6 +10,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,13 +113,22 @@ public class teste {
 				for(File arquivo: listaDeArquivos) {
 					try {
 //						/home/luan/teste.compactado
+						
+						ObjectInputStream streamCompactado = new ObjectInputStream(new FileInputStream(arquivo));
+						byte[] objetoCompactado = (byte[]) streamCompactado.readObject();
+						
 						String caminhoArquivoCompactado = arquivo.getAbsoluteFile().toString().substring(0, arquivo.getAbsoluteFile().toString().lastIndexOf("."));
 						ObjectInputStream streamArvore = new ObjectInputStream(new FileInputStream(caminhoArquivoCompactado + extencaoArvore));
 						ArvoreBinaria<Character> arvore = (ArvoreBinaria<Character>) streamArvore.readObject();
 						
-						Descompactador descompactador = new Descompactador(Files.readAllBytes(arquivo.toPath()), arvore);
+						Descompactador descompactador = new Descompactador(objetoCompactado, arvore);
 						
-						System.out.println(descompactador.descompactar());
+						PrintWriter writer = new PrintWriter(new FileOutputStream(caminhoArquivoCompactado + "descompactado.txt"));
+						writer.print(descompactador.descompactar());
+						writer.close();
+						streamArvore.close();
+						
+//						System.out.println(descompactador.descompactar());
 						
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
