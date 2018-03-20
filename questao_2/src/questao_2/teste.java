@@ -45,15 +45,21 @@ public class teste {
 				do {
 					caminhoArquivo = scanner.nextLine();	
 					File arquivo = new File(caminhoArquivo);
-					if(arquivo.exists()) {
+					if(arquivo.exists() && !caminhoArquivo.isEmpty()) {
 						listaDeArquivos.add(arquivo);
-					} else if (!caminhoArquivo.isEmpty()){
+						System.out.println("Arquivo adicionado para processamento. Se desejar adicione outro ou aperte enter para continuar.");
+					} else if (!arquivo.exists() && !caminhoArquivo.isEmpty()){
 						System.out.println("Arquivo não encontrado! Tente novamente.");
 					}
 					
-					caminhoArquivo = "";
 				} while (!caminhoArquivo.isEmpty());
 //				/home/luan/teste.txt
+//				/home/luan/arquivos de teste/49.in
+//				/home/luan/arquivos de teste/499.in
+//				/home/luan/arquivos de teste/4999.in
+//				/home/luan/arquivos de teste/9999.in
+//				/home/luan/arquivos de teste/17499.in
+//				/home/luan/arquivos de teste/49999.in
 				
 				String line;
 				StringBuilder fullString = new StringBuilder();
@@ -69,17 +75,21 @@ public class teste {
 						
 						String caminhoArquivoCompactado = arquivo.getAbsoluteFile().toString().substring(0, arquivo.getAbsoluteFile().toString().lastIndexOf("."));
 						
-						ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(caminhoArquivoCompactado + extencao));
-						output.writeObject(compactador.getCompactados()); //Salvando apenas o array de bytes				
+						FileOutputStream stream = new FileOutputStream(caminhoArquivoCompactado + extencao);
+						stream.write(compactador.getCompactados());
 						
-						System.out.println(arquivo.length());
-						System.out.println(new File(caminhoArquivoCompactado + extencao).length());
+						long tamOriginal = arquivo.length();
+						long tamFinal = new File(caminhoArquivoCompactado + extencao).length();
 						
-						output.close();
+						System.out.println("Arquivo: " + arquivo.getName() + 
+								" - Tamanho original: " + tamOriginal + " bytes" +
+								" - Tamanho após compressão: " + tamFinal + " bytes");
+						
+						stream.close();
 						reader.close();				
 						
 						ObjectOutputStream outputArvore = new ObjectOutputStream(new FileOutputStream(caminhoArquivoCompactado + extencaoArvore));
-						outputArvore.writeObject(compactador.getArvore()); //Salvando apenas o array de bytes
+						outputArvore.writeObject(compactador.getArvore());
 						outputArvore.close();
 					}			
 				} catch (FileNotFoundException e) {
@@ -100,22 +110,36 @@ public class teste {
 				do {
 					caminhoArquivo = scanner.nextLine();	
 					File arquivo = new File(caminhoArquivo);
-					if(arquivo.exists()) {
-						listaDeArquivos.add(arquivo);
-					} else if (!caminhoArquivo.isEmpty()){
-						System.out.println("Arquivo não encontrado! Tente novamente.");
-					}
 					
-					caminhoArquivo = "";
+					if(arquivo.exists() && !caminhoArquivo.isEmpty()) {						
+						String caminhoArquivoCompactado = arquivo.getAbsoluteFile().toString().substring(0, arquivo.getAbsoluteFile().toString().lastIndexOf("."));
+						File arquivoArvore = new File(caminhoArquivoCompactado + extencaoArvore);
+						if(arquivoArvore.exists()) {
+							listaDeArquivos.add(arquivo);
+							System.out.println("Arquivo adicionado para processamento. Se desejar adicione outro ou aperte enter para continuar.");
+						} else {
+							System.out.println("Arquivo .arvore não existe para o arquivo correspondente."
+									+ " Insira o caminho de um arquivo compactado por esse programa.");
+						}
+						
+					} else if (!arquivo.exists() && !caminhoArquivo.isEmpty()) {
+						System.out.println("Arquivo não encontrado! Tente novamente.");
+					} 		
 				} while (!caminhoArquivo.isEmpty());
 				
 				
 				for(File arquivo: listaDeArquivos) {
 					try {
 //						/home/luan/teste.compactado
-						
-						ObjectInputStream streamCompactado = new ObjectInputStream(new FileInputStream(arquivo));
-						byte[] objetoCompactado = (byte[]) streamCompactado.readObject();
+
+//						/home/luan/arquivos de teste/49.compactado
+//						/home/luan/arquivos de teste/499.compactado
+//						/home/luan/arquivos de teste/4999.compactado
+//						/home/luan/arquivos de teste/9999.compactado
+//						/home/luan/arquivos de teste/17499.compactado
+//						/home/luan/arquivos de teste/49999.compactado
+						FileInputStream streamCompactado = new FileInputStream(arquivo);
+						byte[] objetoCompactado = (byte[]) streamCompactado.readAllBytes();
 						
 						String caminhoArquivoCompactado = arquivo.getAbsoluteFile().toString().substring(0, arquivo.getAbsoluteFile().toString().lastIndexOf("."));
 						ObjectInputStream streamArvore = new ObjectInputStream(new FileInputStream(caminhoArquivoCompactado + extencaoArvore));
@@ -123,12 +147,20 @@ public class teste {
 						
 						Descompactador descompactador = new Descompactador(objetoCompactado, arvore);
 						
-						PrintWriter writer = new PrintWriter(new FileOutputStream(caminhoArquivoCompactado + "descompactado.txt"));
+						PrintWriter writer = new PrintWriter(new FileOutputStream(caminhoArquivoCompactado + ".descompactado.txt"));
 						writer.print(descompactador.descompactar());
 						writer.close();
 						streamArvore.close();
+						streamCompactado.close();
 						
-//						System.out.println(descompactador.descompactar());
+
+						long tamCompactado = arquivo.length();
+						long tamDescompactado = new File(caminhoArquivoCompactado + ".descompactado.txt").length();
+						
+						
+						System.out.println("Arquivo: " + arquivo.getName() + 
+								" - Tamanho compactado: " + tamCompactado + " bytes" +
+								" - Tamanho após descompressão: " + tamDescompactado + " bytes");
 						
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
