@@ -61,10 +61,10 @@ public class teste {
 //				/home/luan/arquivos de teste/17499.in
 //				/home/luan/arquivos de teste/49999.in
 				
-				String line;
-				StringBuilder fullString = new StringBuilder();
 				try {
 					for(File arquivo: listaDeArquivos) {
+						String line;
+						StringBuilder fullString = new StringBuilder();
 						BufferedReader reader = new BufferedReader(new FileReader(arquivo));				
 						while((line = reader.readLine()) != null) {
 							if(fullString.length() > 0) fullString.append(System.lineSeparator());
@@ -86,7 +86,7 @@ public class teste {
 								" - Tamanho após compressão: " + tamFinal + " bytes");
 						
 						stream.close();
-						reader.close();				
+						reader.close();		
 						
 						ObjectOutputStream outputArvore = new ObjectOutputStream(new FileOutputStream(caminhoArquivoCompactado + extencaoArvore));
 						outputArvore.writeObject(compactador.getArvore());
