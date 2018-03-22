@@ -1,7 +1,6 @@
 package questao_2;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,25 +9,22 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import arvore.binaria.ArvoreBinaria;
 
-public class teste {
+public class Executavel {
 
 	public static void main(String[] args) {
 		
-		List<File> listaDeArquivos = new ArrayList();
+		List<File> listaDeArquivos = new ArrayList<File>();
 		String caminhoArquivo;
 		String opcaoSelecionada;
 		final String extencao = ".compactado";
 		final String extencaoArvore = ".arvore";
-		String pathArquivo;
 		
 		System.out.println("Digite a opção: \n"
 				+ "1 - Compactar \n"
@@ -53,16 +49,11 @@ public class teste {
 					}
 					
 				} while (!caminhoArquivo.isEmpty());
-//				/home/luan/teste.txt
-//				/home/luan/arquivos de teste/49.in
-//				/home/luan/arquivos de teste/499.in
-//				/home/luan/arquivos de teste/4999.in
-//				/home/luan/arquivos de teste/9999.in
-//				/home/luan/arquivos de teste/17499.in
-//				/home/luan/arquivos de teste/49999.in
 				
 				try {
 					for(File arquivo: listaDeArquivos) {
+						
+						long tempoInicio = System.nanoTime();        
 						String line;
 						StringBuilder fullString = new StringBuilder();
 						BufferedReader reader = new BufferedReader(new FileReader(arquivo));				
@@ -80,10 +71,12 @@ public class teste {
 						
 						long tamOriginal = arquivo.length();
 						long tamFinal = new File(caminhoArquivoCompactado + extencao).length();
+					    double tempoFinal = (System.nanoTime() - tempoInicio) /  1000000;
 						
 						System.out.println("Arquivo: " + arquivo.getName() + 
 								" - Tamanho original: " + tamOriginal + " bytes" +
-								" - Tamanho após compressão: " + tamFinal + " bytes");
+								" - Tamanho após compressão: " + tamFinal + " bytes" +
+								" - Tempo de execução: " + tempoFinal + "ms");
 						
 						stream.close();
 						reader.close();		
@@ -93,10 +86,8 @@ public class teste {
 						outputArvore.close();
 					}			
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
@@ -130,14 +121,6 @@ public class teste {
 				
 				for(File arquivo: listaDeArquivos) {
 					try {
-//						/home/luan/teste.compactado
-
-//						/home/luan/arquivos de teste/49.compactado
-//						/home/luan/arquivos de teste/499.compactado
-//						/home/luan/arquivos de teste/4999.compactado
-//						/home/luan/arquivos de teste/9999.compactado
-//						/home/luan/arquivos de teste/17499.compactado
-//						/home/luan/arquivos de teste/49999.compactado
 						FileInputStream streamCompactado = new FileInputStream(arquivo);
 						byte[] objetoCompactado = (byte[]) streamCompactado.readAllBytes();
 						
@@ -163,10 +146,8 @@ public class teste {
 								" - Tamanho após descompressão: " + tamDescompactado + " bytes");
 						
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}				

@@ -2,8 +2,9 @@ package arvore.binaria;
 
 import java.io.Serializable;
 
-public class NoArvoreBinaria<T> implements  Comparable<NoArvoreBinaria<T>>, Serializable{
+public class NoArvoreBinaria<T> implements Comparable<NoArvoreBinaria<T>>, Serializable {
 
+	private static final long serialVersionUID = 8349959567011486632L;
 	private T info;
 	private int peso;
 	private NoArvoreBinaria<T> direita;
@@ -12,7 +13,7 @@ public class NoArvoreBinaria<T> implements  Comparable<NoArvoreBinaria<T>>, Seri
 	public NoArvoreBinaria(int peso) {
 		this.peso = peso;
 	}
-	
+
 	public NoArvoreBinaria(T info, int peso) {
 		this.info = info;
 		this.peso = peso;
@@ -27,7 +28,7 @@ public class NoArvoreBinaria<T> implements  Comparable<NoArvoreBinaria<T>>, Seri
 	public T getInfo() {
 		return info;
 	}
-	
+
 	public int getPeso() {
 		return peso;
 	}
@@ -47,12 +48,12 @@ public class NoArvoreBinaria<T> implements  Comparable<NoArvoreBinaria<T>>, Seri
 	public NoArvoreBinaria<T> getDireita() {
 		return this.direita;
 	}
-	
+
 	@Override
 	public String toString() {
 		return arvorePre(this);
 	}
-	
+
 	public String arvorePre(NoArvoreBinaria<T> no) {
 		if (no == null) {
 			return "<>";
@@ -66,12 +67,12 @@ public class NoArvoreBinaria<T> implements  Comparable<NoArvoreBinaria<T>>, Seri
 
 	@Override
 	public int compareTo(NoArvoreBinaria<T> o2) {
-		int diff  = this.peso - o2.peso;
+		int diff = this.peso - o2.peso;
 		return diff == 0 ? -1 : diff;
 	}
-	
+
 	public boolean ehFolha() {
 		return this.direita == null && this.esquerda == null;
 	}
-	
+
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class ArvoreBinaria<T> implements Serializable{
 
+	private static final long serialVersionUID = -2015383912828995547L;
 	private NoArvoreBinaria<T> raiz;
 
 	public ArvoreBinaria() {
