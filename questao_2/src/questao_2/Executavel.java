@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -121,8 +122,7 @@ public class Executavel {
 				
 				for(File arquivo: listaDeArquivos) {
 					try {
-						FileInputStream streamCompactado = new FileInputStream(arquivo);
-						byte[] objetoCompactado = (byte[]) streamCompactado.readAllBytes();
+						byte[] objetoCompactado = (byte[]) Files.readAllBytes(arquivo.toPath());
 						
 						String caminhoArquivoCompactado = arquivo.getAbsoluteFile().toString().substring(0, arquivo.getAbsoluteFile().toString().lastIndexOf("."));
 						ObjectInputStream streamArvore = new ObjectInputStream(new FileInputStream(caminhoArquivoCompactado + extencaoArvore));
@@ -134,8 +134,6 @@ public class Executavel {
 						writer.print(descompactador.descompactar());
 						writer.close();
 						streamArvore.close();
-						streamCompactado.close();
-						
 
 						long tamCompactado = arquivo.length();
 						long tamDescompactado = new File(caminhoArquivoCompactado + ".descompactado.txt").length();
